@@ -287,15 +287,19 @@ public class ContactsServicePlugin implements MethodCallHandler, FlutterPlugin, 
           return true;
         }
         Uri contactUri = intent.getData();
-          if (intent != null){
-        Cursor cursor = contentResolver.query(contactUri, null, null, null, null);
-        if (cursor.moveToFirst()) {
-          String id = contactUri.getLastPathSegment();
-          getContacts("openDeviceContactPicker", id, false, false, false, localizedLabels, this.result);
-        } else {
-          Log.e(LOG_TAG, "onActivityResult - cursor.moveToFirst() returns false");
-          finishWithResult(FORM_OPERATION_CANCELED);
-        }}else{return true;}
+         if (intent != null) {
+    Cursor cursor = contentResolver.query(contactUri, null, null, null, null);
+    if (cursor != null && cursor.moveToFirst()) {
+      String id = contactUri.getLastPathSegment();
+      getContacts("openDeviceContactPicker", id, false, false, false, localizedLabels, this.result);
+    } else {
+      Log.e(LOG_TAG, "onActivityResult - cursor.moveToFirst() returns false");
+      finishWithResult(FORM_OPERATION_CANCELED);
+    }
+    cursor.close(); // ✅ Agora dentro do if, e cursor está acessível aqui
+  } else {
+    return true;
+  }
         cursor.close();
         return true;
       }
