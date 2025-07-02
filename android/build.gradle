@@ -22,6 +22,7 @@ rootProject.allprojects {
 apply plugin: 'com.android.library'
 
 android {
+    namespace "dev.flutter_contacts" // ✅ Adicionado para suportar AGP 8+
     compileSdkVersion 30
 
     defaultConfig {
