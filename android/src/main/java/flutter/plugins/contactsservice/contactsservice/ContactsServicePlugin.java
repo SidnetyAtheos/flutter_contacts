@@ -300,8 +300,7 @@ public class ContactsServicePlugin implements MethodCallHandler, FlutterPlugin, 
   } else {
     return true;
   }
-        cursor.close();
-        return true;
+    
       }
 
       finishWithResult(FORM_COULD_NOT_BE_OPEN);
